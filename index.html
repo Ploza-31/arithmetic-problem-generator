@@ -5,83 +5,7 @@
     <meta name="keywords" content="arithmetic, math, practice, problem generator">
     <meta name="Longakit, P" content="Arithmetic Problem Generator">
     <meta charset="utf-8">
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        text-align: center;
-        width: 100%;
-        overflow-x: hidden;
-      }
-
-      #problem {
-        font-size: 24px;
-      }
-
-      #problem-wrapper {
-        transform: scale(1.5);
-      }
-
-      footer {
-        background-color: #eee;
-        color: #333;
-        font-size: 12px;
-        padding: 20px;
-        text-align: center;
-      }
-
-      #credits {
-         margin-bottom: 10px;
-      }
-
-      #cc-logo img {
-        height: 31px;
-        width: 88px;
-      }
-
-      ul {
-        list-style-type: square;
-      }
-
-      .incorrect {
-        animation: shake 0.5s;
-        color: red;
-      }
-      @keyframes shake {
-        0% {
-          transform: translate(1px, 1px) rotate(0deg);
-        }
-        10% {
-          transform: translate(-1px, -2px) rotate(-1deg);
-        }
-        20% {
-          transform: translate(-3px, 0px) rotate(1deg);
-        }
-        30% {
-          transform: translate(3px, 2px) rotate(0deg);
-        }
-        40% {
-          transform: translate(1px, -1px) rotate(1deg);
-        }
-        50% {
-          transform: translate(-1px, 2px) rotate(-1deg);
-        }
-        60% {
-          transform: translate(-3px, 1px) rotate(0deg);
-        }
-        70% {
-          transform: translate(3px, 1px) rotate(-1deg);
-        }
-        80% {
-          transform: translate(-1px, -1px) rotate(1deg);
-        }
-        90% {
-          transform: translate(1px, 2px) rotate(0deg);
-        }
-        100% {
-          transform: translate(1px, -2px) rotate(-1deg);
-        }
-      }
-    </style>
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
     <h1>Arithmetic Practice</h1>
@@ -96,11 +20,23 @@
       <button type="button" onclick="checkAnswer()">Check Answer</button>
     </form> 
     <p id="coinCounter">Streak: 0</p>
-    <audio id="failSound" src="hitHurt.wav">
+    <div id="overlay"></div>
+    <div id="changelogButton">Show changelog</div>
+      <div id="changelog">
+        <div class="close">X</div>
+        <h2>Changelog</h2>
+        <ul>
+          <li>12-18-22 : Modified the function to round division results to two decimal places.</li>
+          <li>12-18-22 : Expanded the range of operands in the function from 1 to 100.</li>
+          <li>12-19-22 : Added the capability to generate two additional mixed operations</li>
+          <li>12-19-22 : Added and refined changelog system.</li>
+        </ul>
+      </div>
+    <audio id="failSound" src="audios/hitHurt.wav">
       Your browser does not support the audio element.
     </audio>
   
-    <audio id="successSound" src="powerUp.wav">
+    <audio id="successSound" src="audios/powerUp.wav">
       Your browser does not support the audio element.
     </audio>
     <footer>
@@ -113,98 +49,7 @@
       <div id="cc-logo">
         <a href="https://creativecommons.org/licenses/by-nc/4.0/"><img src="https://licensebuttons.net/l/by-nc/4.0/88x31.png" alt="Creative Commons License"></a>
       </div>
-      <div id="changelog">
-        <h2>Changelog</h2>
-        <ul>
-          <li>1. Updated a function to allow answers with up to 2 decimal places for division problems</li>
-          <li>2. Increased the operand range limit in a function from 1-10 to 1-100</li>
-        </ul>
-      </div>
     </footer>
-  </body>
-    
-    <script>
-     function checkAnswer() {
-  // Get the user's answer
-  var answer = document.getElementById("answer").value;
-
-  // Get the current problem element
-  var problem = document.getElementById("problem");
-
-  // Split the problem string into an array of strings
-  var problemArray = problem.textContent.split(" ");
-
-  // Initialize the result to the first number in the array
-  var result = parseFloat(problemArray[0]);
-
-  // Loop through the array and perform the necessary calculations
-  for (var i = 1; i < problemArray.length; i += 2) {
-    if (problemArray[i] == "+") {
-      result += parseFloat(problemArray[i+1]);
-    } else if (problemArray[i] == "-") {
-      result -= parseFloat(problemArray[i+1]);
-    } else if (problemArray[i] == "x") {
-      result *= parseFloat(problemArray[i+1]);
-    } else if (problemArray[i] == "÷") {
-      result /= parseFloat(problemArray[i+1]);
-    }
-  }
-
-  // Round the result to 2 decimal places
-var limitedResult = result.toFixed(2);
-
-// Check if the answer is correct
-if (parseFloat(limitedResult) == parseFloat(answer)) {
-  // If the answer is correct, generate a new problem and play the success sound
-  generateProblem();
-  document.getElementById('successSound').play();
-
-  // Increment the streak counter
-  var streakCounter = document.getElementById("coinCounter");
-  streakCounter.textContent = "Streak: " + (parseInt(streakCounter.textContent.split(" ")[1]) + 1);
-} else {
-  // If the answer is incorrect, display a feedback message, shake the problem element, and play the fail sound
-  document.getElementById("feedback").textContent = "Incorrect, please try again.";
-  problem.classList.add("incorrect");
-  // Add a delay before removing the incorrect class
-  setTimeout(function() {
-    problem.classList.remove("incorrect");
-  }, 500);
-  document.getElementById('failSound').play();
-
-  // Reset the streak counter
-  document.getElementById("coinCounter").textContent = "Streak: 0";
-}
-
-}
-
-      
-      function generateProblem() {
-        // Generate two random numbers between 1 and 10
-        var num1 = Math.floor(Math.random() * 100) + 1;
-        var num2 = Math.floor(Math.random() * 100) + 1;
-        
-        // Generate a random operation (0 = addition, 1 = subtraction, 2 = multiplication, 3 = division)
-        var operation = Math.floor(Math.random() * 4);
-        
-        // Set the text of the problem element based on the operation
-        if (operation == 0) {
-          document.getElementById("problem").textContent = num1 + " + " + num2 + " = ?";
-        } else if (operation == 1) {
-          document.getElementById("problem").textContent = num1 + " - " + num2 + " = ?";
-        } else if (operation == 2) {
-          document.getElementById("problem").textContent = num1 + " x " + num2 + " = ?";
-        } else {
-          document.getElementById("problem").textContent = num1 + " ÷ " + num2 + " = ?";
-        }
-        
-        // Reset the feedback message and remove the incorrect class from the problem element
-        document.getElementById("feedback").textContent = "";
-        document.getElementById("problem").classList.remove("incorrect");
-      }
-      
-      // Generate the first problem when the page loads
-      generateProblem();
-    </script>
+    <script src="script.js"></script>
   </body>
 </html>
