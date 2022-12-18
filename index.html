@@ -9,6 +9,8 @@
       body {
         font-family: Arial, sans-serif;
         text-align: center;
+        width: 100%;
+        overflow-x: hidden;
       }
 
       #problem {
@@ -34,6 +36,10 @@
       #cc-logo img {
         height: 31px;
         width: 88px;
+      }
+
+      ul {
+        list-style-type: square;
       }
 
       .incorrect {
@@ -86,7 +92,7 @@
     <p id="feedback"></p>
     <form>
       <label for="answer">Answer:</label><br>
-      <input type="text" id="answer"><br>
+      <input type="text" id="answer" placeholder="e.g. 5 or 0.31"><br>
       <button type="button" onclick="checkAnswer()">Check Answer</button>
     </form> 
     <p id="coinCounter">Streak: 0</p>
@@ -97,23 +103,24 @@
     <audio id="successSound" src="powerUp.wav">
       Your browser does not support the audio element.
     </audio>
-      <footer>
-        <div id="credits">
-            Website by Longakit, P | Programming/Idea Support by ChatGPT (OpenAI Services) | Sound by Jsfxr https://sfxr.me/
-          <br>
-          This website is licensed under a 
-          <a href="https://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
-        </div>
-        <div id="cc-logo">
-          <a href="https://creativecommons.org/licenses/by-nc/4.0/"><img src="https://licensebuttons.net/l/by-nc/4.0/88x31.png" alt="Creative Commons License"></a>
-        </div>
-        <div id="changelog">
-          <h2>Changelog</h2>
-          <ul>
-            <li>Updated a function to allow answers with up to 2 decimal places for division problems</li>
-          </ul>
-        </div>
-      </footer>
+    <footer>
+      <div id="credits">
+          Website by @Beuz | Programming/Idea Support by ChatGPT (OpenAI Services) | Sound by Jsfxr https://sfxr.me/
+        <br>
+        This website is licensed under a 
+        <a href="https://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
+      </div>
+      <div id="cc-logo">
+        <a href="https://creativecommons.org/licenses/by-nc/4.0/"><img src="https://licensebuttons.net/l/by-nc/4.0/88x31.png" alt="Creative Commons License"></a>
+      </div>
+      <div id="changelog">
+        <h2>Changelog</h2>
+        <ul>
+          <li>1. Updated a function to allow answers with up to 2 decimal places for division problems</li>
+          <li>2. Increased the operand range limit in a function from 1-10 to 1-100</li>
+        </ul>
+      </div>
+    </footer>
   </body>
     
     <script>
